@@ -15,7 +15,7 @@ typedef struct Recurso {
     pthread_mutex_t lock;
 } Recurso;
 
-// Estrutura para representar um processo com um identificador, recursos máximos e recursos alocados
+// Estrutura para representar um processo com um identificador, recursos mÃ¡ximos e recursos alocados
 typedef struct Processo {
     int id;
     int max_recursos[NUM_RECURSOS];
@@ -29,7 +29,7 @@ Processo processos[NUM_PROCESSOS];
 bool visitados[NUM_PROCESSOS];
 bool pilha[NUM_PROCESSOS];
 
-// Função para realizar uma busca em profundidade para detectar ciclo em um grafo
+// FunÃ§Ã£o para realizar uma busca em profundidade para detectar ciclo em um grafo
 bool dfs_detectar_ciclo(int no) {
     visitados[no] = true;
     pilha[no] = true;
@@ -50,7 +50,7 @@ bool dfs_detectar_ciclo(int no) {
     return false;
 }
 
-// Função para detectar deadlock percorrendo os processos e executando a busca em profundidade
+// FunÃ§Ã£o para detectar deadlock percorrendo os processos e executando a busca em profundidade
 bool detectar_deadlock() {
     for (int i = 0; i < NUM_PROCESSOS; ++i) {
         visitados[i] = false;
@@ -68,7 +68,7 @@ bool detectar_deadlock() {
     return false;
 }
 
-// Função para alocar um recurso para um processo
+// FunÃ§Ã£o para alocar um recurso para um processo
 bool alocacao_recurso(Processo *processo, int indice_recurso) {
     pthread_mutex_lock(&processo->lock);
     pthread_mutex_lock(&recursos[indice_recurso].lock);
@@ -85,7 +85,7 @@ bool alocacao_recurso(Processo *processo, int indice_recurso) {
     return false;
 }
 
-// Função para liberar um recurso alocado por um processo
+// FunÃ§Ã£o para liberar um recurso alocado por um processo
 void liberar_recurso(Processo *processo, int indice_recurso) {
     pthread_mutex_lock(&processo->lock);
     pthread_mutex_lock(&recursos[indice_recurso].lock);
@@ -98,7 +98,7 @@ void liberar_recurso(Processo *processo, int indice_recurso) {
     pthread_mutex_unlock(&processo->lock);
 }
 
-// Função executada pelas threads para simular as alocações e detectar deadlock
+// FunÃ§Ã£o executada pelas threads para simular as alocaÃ§Ãµes e detectar deadlock
 void *simular(void *arg) {
     int iteracao = 0;
     while (iteracao < MAX_ITERACOES) {
@@ -119,7 +119,7 @@ void *simular(void *arg) {
 }
 
 int main() {
-    // Inicialização dos recursos e processos
+    // InicializaÃ§Ã£o dos recursos e processos
     for (int i = 0; i < NUM_RECURSOS; ++i) {
         recursos[i].id = i;
         pthread_mutex_init(&recursos[i].lock, NULL);
@@ -134,7 +134,7 @@ int main() {
         }
     }
 
-    // Criação e execução das threads para simulação
+    // CriaÃ§Ã£o e execuÃ§Ã£o das threads para simulaÃ§Ã£o
     pthread_t threads[NUM_THREADS];
     for (int i = 0; i < NUM_THREADS; ++i) {
         pthread_create(&threads[i], NULL, simular, NULL);
